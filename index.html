@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Portfolio - Noël Anthonio</title>
+  <!-- Bootstrap 5 CSS -->
+  <link href="./css/bootstrap-5.0.2-dist/bootstrap-5.0.2-dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap Icons -->
+  <link href="./css/bootstrap-icons-1.13.1/bootstrap-icons-1.13.1/bootstrap-icons.css" rel="stylesheet">
+
+  <style>
+    :root {
+        --primary: rgb(243, 245, 245);
+    }
+    body { 
+        background: #f8f9fa; 
+        scroll-behavior: smooth; 
+    }
+    .section { padding: 5rem 0; }
+    .bg-soft { 
+        background: #fff; 
+        border-radius: .5rem; 
+        box-shadow: 0 .125rem .25rem rgba(0,0,0,0.075); }
+
+    /* Accueil */
+    #home {
+      background: url('./img/header.jpg') center/cover no-repeat fixed;
+      height: 95vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      position: relative;
+      animation: fadeIn 1s ease-in-out;
+    }
+    #home::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+    }
+    #home .container { 
+        position: relative; 
+        z-index: 1; 
+        text-align: center; }
+
+    /* Sections colorées */
+    #about      { background: var(--primary); }
+    #experience { background: var(--primary); }
+    #education  { background: var(--primary); }
+    #projects   { background: var(--primary); }
+    #contact    { background: var(--primary); }
+
+    .section-sh{
+        box-shadow: 5px 5px 5px rgba(16, 19, 19, 0.25);
+    }
+    .section-sh-1{
+        box-shadow: 0 4px 15px rgba(16, 19, 19, 0.15);
+    }
+
+    /* Cartes et timeline */
+    .card-alt { border: none; 
+        border-radius: .75rem; 
+        transition: transform .3s; 
+    }
+    .card-alt:hover { transform: translateY(-5px); }
+    .timeline { 
+        position: relative; 
+        margin: 2rem 0;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 50%; 
+      top: 0; 
+      bottom: 0;
+      width: 4px; 
+      background: #ccc;
+    }
+    .timeline-item {
+      position: relative;
+      width: 50%; 
+      padding: 1rem 2rem;
+      animation: slideIn 0.6s ease forwards; 
+      opacity: 0;
+    }
+    .timeline-item:nth-child(odd)  { left: 0; }
+    .timeline-item:nth-child(even) { left: 50%; }
+    .timeline-item::before {
+      content: '';
+      position: absolute; 
+      top: 1rem;
+      width: 16px; 
+      height: 16px; 
+      border-radius: 50%;
+      background: #6c757d;
+    }
+    .timeline-item:nth-child(odd)::before  { right: -8px; }
+    .timeline-item:nth-child(even)::before { left: -8px; }
+
+    /* Navbar */
+    #mainNav {
+      background: rgba(255,255,255,0.9);
+      backdrop-filter: blur(10px);
+      transition: background .3s;
+    }
+    #mainNav.scrolled { background: rgba(255,255,255,1); }
+    .navbar-brand { 
+        font-size: 1.5rem; 
+        color: #495057; }
+    .nav-link {
+      color: #495057; 
+      margin: 0 .5rem; 
+      padding: .5rem .8rem;
+      border-radius: .25rem; 
+      transition: background .3s, color .3s;
+    }
+    .nav-link:hover, .nav-link.active {
+        background-color: rgba(23, 78, 134, 0.8) !important; /*gris moyen*/
+        color: #fff !important;
+    }
+
+    /* Hamburger to X */
+    .navbar-toggler {
+      border: none; 
+      width: 2rem; 
+      height: 2rem; 
+      position: relative;
+      padding: 10px;
+    }
+    .navbar-toggler .bar {
+      display: block; 
+      width: 70%; 
+      height: .25rem;
+      background: #495057;
+      border-radius: .125rem;
+      position: absolute; 
+      left: 20%;
+      transition: transform .3s ease, top .3s ease, opacity .3s ease;
+    }
+    .navbar-toggler .bar:nth-child(1) { top: .3rem; }
+    .navbar-toggler .bar:nth-child(2) { top: calc(50% - .125rem); }
+    .navbar-toggler .bar:nth-child(3) { bottom: .3rem; }
+    
+    /* .navbar-toggler.collapsed .bar:nth-child(1) {
+      transform: rotate(45deg); 
+      top: calc(50% - .125rem);
+    }
+    .navbar-toggler.collapsed .bar:nth-child(2) { opacity: 0; }
+    .navbar-toggler.collapsed .bar:nth-child(3) {
+      transform: rotate(-45deg); 
+      top: calc(50% - .125rem);
+      bottom: auto;
+    } */
+  
+
+    .social-icons {
+        margin-top: 1rem;
+        display: flex;
+        justify-content: center;
+        gap: 1.5rem;
+    }
+
+    .social-icons a {
+        color: #fff;
+        font-size: 1.5rem;
+        transition: color 0.3s ease, transform 0.3s ease;
+    }
+
+    .social-icons a:hover {
+        color: #ffffff; /* couleur bleue Bootstrap pour le hover */
+        transform: translateY(-7px);
+    }
+    .card-alt {
+        border-radius: 0.75rem;
+        transition: box-shadow 0.3s ease;
+    }
+    .card-alt:hover {
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .overlay {
+        position: absolute;
+        inset: 0;
+        background-color: rgba(0,0,0,0.6);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        z-index: 10;
+    }
+
+    .card-alt:hover .overlay {
+        opacity: 1;
+    }
+
+    .overlay .btn {
+        opacity: 0.9;
+        width: 140px;
+    }
+
+    .card-img-top {
+        transition: transform 0.3s ease;
+    }
+
+    .card-alt:hover .card-img-top {
+        transform: scale(1.05);
+    }
+
+  .stat-number {
+    font-size: 0.8rem;
+    /* font-weight: 700; */
+    color: var(--primary-color);
+    /* margin-bottom: 0.5rem; */
+  }
+
+    @media (max-width: 991.98px) {
+      .navbar-nav .nav-link {
+      margin: 0.5rem 0;
+      text-align: center;
+   
+    }
+    }
+
+
+    /* Keyframes */
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes slideIn { 0% { transform: translateY(20px); opacity: 0; } 100% { transform: translateY(0); opacity: 1; } }
+
+    @media screen(max-width: 768px) {
+      
+    }
+</style>
+</head>
+<body data-bs-spy="scroll" data-bs-target="#mainNav" data-bs-offset="80">
+
+  <!-- Navbar -->
+  <nav id="mainNav" class="navbar navbar-expand-lg fixed-top section-sh-1">
+    <div class="container-fluid">
+      <a class="navbar-brand fw-bold" href="#home">Noël Anthonio</a>
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavContent" aria-controls="mainNavContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </button>
+
+
+      <div class="navbar-collapse collapse" id="mainNavContent">
+        <ul class="navbar-nav ms-auto nav-pills fw-bold">
+          <li class="nav-item"><a class="nav-link" href="#home">Accueil</a></li>
+          <li class="nav-item"><a class="nav-link" href="#about">À propos</a></li>
+          <li class="nav-item"><a class="nav-link" href="#experience">Expériences</a></li>
+          <li class="nav-item"><a class="nav-link" href="#education">Formations</a></li>
+          <li class="nav-item"><a class="nav-link" href="#projects">Projets</a></li>
+          <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <main>
+    <!-- Home -->
+    <section id="home" class="section">
+        <div class="container">
+          <h1 style="margin-top: 10rem;">Bonjour, je suis</h1>
+          <h1 class="display-4 fw-bold">Noël Anthonio</h1>
+          <p class="lead" style="letter-spacing: 4px;">Data Analyst & Développeur Web</p>
+          <a href="./file/CV_DATA.pdf" class="btn btn-primary btn-lg mt-3 fw-bold" style="margin-bottom: 5rem;">
+            <i class="bi bi-download me-1"></i>Télécharger mon CV
+          </a>
+          <!-- <span class="badge bg-info text-light ms-2 stat-number">50 Vue(s)</span> -->
+          <div class="social-icons">
+            <a href="#" target="_blank" aria-label="LinkedIn">
+              <i class="bi bi-linkedin"></i>
+            </a>
+            <a href="#" target="_blank" aria-label="GitHub">
+              <i class="bi bi-github"></i>
+            </a>
+            <a href="mailto:anthonio.andrisolo@gmail.com" aria-label="Email">
+              <i class="bi bi-envelope"></i>
+            </a>
+            <a href="#" aria-label="Whatsapp">
+              <i class="bi bi-whatsapp"></i>
+            </a>
+          </div>
+            
+        </div>
+      </section>
+
+    <!-- About -->
+    <section id="about" class="section">
+        <div class="container bg-soft p-5 section-sh">
+          <h2 class="mb-4 text-center">Qui suis-je ?</h2>
+          <div class="row align-items-center">
+            <div class="col-md-4 text-center">
+              <img src="./img/avatar.jpg" class="rounded-circle img-fluid mb-3" alt="Portrait">
+            </div>
+            <div class="col-md-8">
+              <p style="text-indent: 6rem; text-align: justify;">
+                Passionné par les données et le développement, je suis titulaire d'un Master I en Informatique
+                avec spécialisation en bases de données et génie logiciel. Grâce à mes expériences
+                professionnelles, j'ai acquis une expertise dans l'analyse de données, le développement web
+                et la création de tableaux de bord. Curieux, rigoureux et polyvalent, je m'investis pleinement
+                dans chaque projet pour offrir des solutions innovantes et efficaces.
+              </p>
+              <div class="row mt-4 g-3">
+                <div class="col-sm-6 col-lg-3">
+                  <div class="p-3 bg-light rounded h-100 text-center section-sh-1">
+                    <h5 class="mb-3"><i class="bi bi-code-slash me-2"></i>Web Developer</h5>
+                    <ul class="list-unstyled small">
+                        <li>HTML/CSS</li>
+                        <li>JavaScript</li>
+                        <li>PHP</li>
+                        <li>Bootstrap 5</li>
+                        <li>Mysql</li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="col-sm-6 col-lg-3">
+                  <div class="p-3 bg-light rounded h-100 text-center section-sh-1">
+                    <h5 class="mb-3"><i class="bi bi-bar-chart-line-fill me-2"></i>Data Analysis</h5>
+                    <ul class="list-unstyled small">
+                      <li>Python</li>
+                      <li>SQL</li>
+                      <li>TSQL</li>
+                      <li>Excel & VBA</li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="col-sm-6 col-lg-3">
+                    <div class="p-3 bg-light rounded h-100 text-center section-sh-1">
+                      <h5 class="mb-3"><i class="bi bi-people-fill me-2"></i>Soft Skills</h5>
+                      <ul class="list-unstyled small">
+                        <li>Méthodique</li>
+                        <li>Esprit d'équipe</li>
+                        <li>Rigueur</li>
+                        <li>Adaptabilité</li>
+                      </ul>
+                    </div>
+                  </div>
+                <div class="col-sm-6 col-lg-3">
+                  <div class="p-3 bg-light rounded h-100 text-center section-sh-1">
+                    <h5 class="mb-3"><i class="bi bi-translate me-2"></i>Langues</h5>
+                    <ul class="list-unstyled small">
+                        <li><i class="bi bi-globe2 me-2"></i>Malagasy (Langue maternelle)</li>
+                        <li><i class="bi bi-globe2 me-2"></i>Français (Moyen)</li>
+                        <li><i class="bi bi-globe2 me-2"></i>Anglais (Amateur)</li>
+                      </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    <!-- Expériences -->
+    <section id="experience" class="section">
+        <div class="container bg-soft p-5 rounded-4 section-sh">
+          <h2 class="mb-5 text-center">Mes <span class="fw-bold">Expériences</span></h2>
+          <div class="timeline">
+            <div class="timeline-item">
+              <div class="timeline-dot bg-primary"></div>
+              <div class="timeline-content">
+                <h5>Société Générale Madagascar <span class="badge bg-primary ms-2">Dataminer</span></h5>
+                <small class="text-muted">Février 2024 - Décembre 2024</small>
+                <p style="text-align: justify;">
+                    <ul style="text-align: justify;">
+                        <li>Analyse et traitement des données clients pour nourrir la stratégie .</li>
+                        <li>Création et automatisation de tableaux de bord Excel/VBA .</li>
+                        <li>Suivi des performances commerciales et reporting à la direction.</li>
+                    </ul>
+                </p>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-dot bg-success"></div>
+              <div class="timeline-content">
+                <h5>Odity<span class="badge bg-primary ms-2">Chargé Reporting</span></h5>
+                <small class="text-muted">Avril 2023 - Janvier 2024</small>
+                <p style="text-align: justify;">
+                    <ul style="text-align: justify;">
+                        <li>Conception et mise à jour de reportings opérationnels</li>
+                        <li>Définition et suivi de KPI (taux d’appels, DMT, taux de résolution).</li>
+                        <li>Diffusion des rapports via une application web et traitement T‑SQL.</li>
+                </p>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-dot bg-warning"></div>
+              <div class="timeline-content">
+                <h5>CFA-ASA Andrainarivo <span class="badge bg-primary text-light ms-2">Stagiaire Dev Web</span></h5>
+                <small class="text-muted">Décembre 2022 - Janvier 2023</small>
+                <p style="text-align: justify;">
+                    <ul style="text-align: justify;">
+                        <li> Développement d’une plateforme web responsive.</li>
+                        <li>Intégration d’une base MySQL et de Chart.js pour statistiques dynamiques.</li>
+                        <li>Support technique et collecte de données.</li>
+                    </ul>
+                </p>
+              </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-dot bg-warning"></div>
+                <div class="timeline-content">
+                  <h5>NUMEN Madagascar<span class="badge bg-primary text-light ms-2">Opérateur saisie de données</span></h5>
+                  <small class="text-muted">Juillet 2021 - Mars 2022</small>
+                  <p style="text-align: justify;">
+                    <ul style="text-align: justify;">
+                        <li>Saisie massive de documents administratifs et financiers.</li>
+                        <li>Contrôle qualité et vérification de cohérence des données saisies.</li>
+                        <li>Respect strict des normes de confidentialités et des délais de production.</li>
+                    </ul>
+                </p>
+                </div>
+              </div>
+              <div class="timeline-item">
+                <div class="timeline-dot bg-warning"></div>
+                <div class="timeline-content">
+                  <h5>Area Malaza Ampitatafika<span class="badge bg-primary text-light ms-2">Assistant KPI</span></h5>
+                  <small class="text-muted">Avril 2018 - Septembre 2018</small>
+                  <p style="text-align: justify;">
+                    <ul style="text-align: justify;">
+                        <li>Collecter et traitement de données opérationnelles pour produire des KPIs fiables.</li>
+                        <li>suivi des performances des équipes et aide à la prise de décision par des visualisations claires.</li>
+                    </ul>
+                 </p>
+                </div>
+              </div>
+          </div>
+        </div>
+      </section>
+      
+    <!-- Formations -->
+    <section id="education" class="section">
+      <div class="container bg-soft p-5 rounded-4 section-sh">
+        <h2 class="mb-5 text-center">Mes <span class="fw-bold">Formations</span></h2>
+        <div class="row g-4">
+          <div class="col-md-4">
+            <div class="card card-alt h-100 text-center">
+              <div class="card-body rounded-4 section-sh-1">
+                <i class="bi bi-laptop display-4 text-secondary mb-3"></i>
+                <h5 class="card-title">Orange Digital Center</h5>
+                <p class="text-muted">Mars 2025</p>
+                <p>Formation intensive en Data Science avec Python.</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card card-alt h-100 text-center">
+              <div class="card-body rounded-4 section-sh-1">
+                <i class="bi bi-mortarboard display-4 text-secondary mb-3"></i>
+                <h5 class="card-title">M1 Informatique - CNTEMAD</h5>
+                <p class="text-muted">2022 - 2023</p>
+                <p>Spécialisation Bases de Données & Génie Logiciel.</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card card-alt h-100 text-center">
+              <div class="card-body rounded-4 section-sh-1">
+                <i class="bi bi-journal-bookmark display-4 text-secondary mb-3"></i>
+                <h5 class="card-title">Licence Informatique - CNTEMAD</h5>
+                <p class="text-muted">2018 - 2022</p>
+                <p>Fondamentaux de la programmation et des Systèmes d’Information.</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card card-alt h-100 text-center">
+              <div class="card-body rounded-4 section-sh-1">
+                <i class="bi bi-person-workspace display-4 text-secondary mb-3"></i>
+                <h5 class="card-title">Gestion Informatique - IESTIME Antaninandro</h5>
+                <p class="text-muted">2016 - 2017</p>
+                <p>Introduction aux systèmes d’information et bureautique avancée.</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card card-alt h-100 text-center">
+              <div class="card-body rounded-4 section-sh-1">
+                <i class="bi bi-award display-4 text-secondary mb-3"></i>
+                <h5 class="card-title">Bac Scientifique - Collège St Joseph Mahamasina</h5>
+                <p class="text-muted">2015 - 2016</p>
+                <p>Développement d’un esprit logique et analytique.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Projets -->
+    <section id="projects" class="section">
+        <div class="container bg-soft p-5 rounded-4 section-sh">
+          <h2 class="mb-5 text-center">Mes <span class="fw-bold">Projets</span></h2>
+          <div class="row g-4">
+            <!-- Projet 1 -->
+            <div class="col-md-6 col-lg-4">
+              <div class="card card-alt h-100 position-relative overflow-hidden section-sh">
+                <img src="./img/projet2.PNG" class="card-img-top" alt="Portfolio Personnel">
+                <div class="overlay d-flex flex-column justify-content-center align-items-center">
+                  <a href="" target="" class="btn btn-primary mb-2">Voir le projet</a>
+                  <a href="" target="" class="btn btn-secondary">Code source</a>
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">Portfolio Personnel</h5>
+                    <p class="card-text flex-grow-1" style="text-align: justify;">
+                      Mon site personnel présentant mes réalisations, avec un design responsive et moderne.
+                    </p>
+                    <!-- <small class="text-muted"><strong>Technologies : </strong> HTML, CSS, Bootstrap, JavaScript</small> -->
+                     <span class="badge bg-primary ms-2">HTML5/CSS3</span>
+                     <span class="badge bg-primary ms-2">Boostrap5</span>
+                     <span class="badge bg-primary ms-2">JavaScript</span>                     
+
+                </div>
+              </div>
+            </div>
+      
+            <!-- Projet 2 -->
+            <div class="col-md-6 col-lg-4">
+              <div class="card card-alt h-100 position-relative overflow-hidden section-sh">
+                <img src="./img/projet.png" class="card-img-top" alt="Application Météo">
+                <div class="overlay d-flex flex-column justify-content-center align-items-center">
+                  <a href="https://app-meteo.com" target="_blank" class="btn btn-primary mb-2">Voir le projet</a>
+                  <a href="https://github.com/ton-repo/meteo" target="_blank" class="btn btn-secondary">Code source</a>
+                </div>
+                <div class="card-body">
+                  <h5 class="card-title">Application Météo</h5>
+                  <p class="card-text">Application web affichant la météo en temps réel avec API externe.</p>
+                </div>
+              </div>
+            </div>
+            <!-- Ajouter d'autres projets ici -->
+          </div>
+        </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="section">
+        <div class="container bg-soft p-5 rounded-4 section-sh" >
+          <h2 class="mb-5 text-center">Me contacter</h2>
+          <div class="row g-4">
+            <!--Formulaire-->
+            <div class="col-md-7" >
+              <div class="bg-soft p-4 h-100" style="border: 1px solid rgba(144, 140, 140,0.2);">
+                <form id="contactForm" action="https://formspree.io/f/meoklarp" method="POST">
+                  <div class="mb-3">
+                    <label for="name" class="form-label">Nom</label>
+                    <input type="text" class="form-control" id="name" name="name" placeholder="Votre nom" required>
+                  </div>
+                  <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="email" name="_replyto" placeholder="Votre email" required>
+                  </div>
+                  <div class="mb-3">
+                    <label for="message" class="form-label">Message</label>
+                    <textarea class="form-control" id="message" name="message" rows="4" placeholder="Votre message" required></textarea>
+                  </div>
+                  <button type="submit" class="btn btn-primary w-100">Envoyer</button>
+                </form>
+                <!-- Messages d'info -->
+                <div id="formMessage" class="mt-3" style="display:none;"></div>
+              </div>
+            </div>
+            <!--Mes coordonnées-->
+            <div class="col-md-5">
+              <div class="bg-soft p-4 h-100">
+                <h5>Coordonnées</h5>
+                <p><i class="bi bi-telephone-fill me-2"></i>+261 34 85 130 09 / +261 32 78 492 75</p>
+                <p><i class="bi bi-geo-alt-fill me-2"></i>II M 44 J Androhibe Andrianalefy, <br>Antananarivo Madagascar 101</p>
+                <p><i class="bi bi-envelope-fill me-2"></i>anthonio.andrisolo@gmail.com</p>
+                <div class="social-icons" style="margin-top: 5rem;">
+                    <a href="#" target="_blank" aria-label="LinkedIn">
+                      <i class="bi bi-linkedin text-dark"></i>
+                    </a>
+                    <a href="#" target="_blank" aria-label="GitHub">
+                      <i class="bi bi-github text-dark"></i>
+                    </a>
+                    <a href="mailto:anthonio.andrisolo@gmail.com" aria-label="Email">
+                      <i class="bi bi-envelope text-dark"></i>
+                    </a>
+                    <a href="#" aria-label="Whatsapp">
+                      <i class="bi bi-whatsapp text-dark"></i>
+                    </a>
+                  </div>  
+            </div>
+
+            </div>
+          </div>
+        </div>
+      
+        <script>
+          const form = document.getElementById('contactForm');
+          const formMessage = document.getElementById('formMessage');
+      
+          form.addEventListener('submit', function(event) {
+            event.preventDefault();
+            formMessage.style.display = 'none';
+            const formData = new FormData(form);
+      
+            fetch(form.action, {
+              method: form.method,
+              body: formData,
+              headers: { 'Accept': 'application/json' }
+            })
+            .then(response => {
+              if (response.ok) {
+                formMessage.style.color = 'green';
+                formMessage.textContent = "Merci pour votre message, je vous répondrai rapidement.";
+                formMessage.style.display = 'block';
+                form.reset();
+              } else {
+                response.json().then(data => {
+                  if (Object.hasOwn(data, 'errors')) {
+                    formMessage.style.color = 'red';
+                    formMessage.textContent = data["errors"].map(error => error.message).join(", ");
+                    formMessage.style.display = 'block';
+                  } else {
+                    throw new Error('Erreur lors de l\'envoi du formulaire');
+                  }
+                });
+              }
+            })
+            .catch(() => {
+              formMessage.style.color = 'red';
+              formMessage.textContent = "Une erreur est survenue, veuillez réessayer plus tard.";
+              formMessage.style.display = 'block';
+            });
+          });
+        </script>
+      </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="text-center py-4" style="background:#343a40; color:#adb5bd;">
+    <small>&copy; 2025 Noël Anthonio. Tous droits réservés.</small>
+  </footer>
+
+
+  <!-- Bootstrap JS -->
+  <script src="./css/bootstrap-5.0.2-dist/bootstrap-5.0.2-dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    // Sélection du toggler et du collapse
+    const toggler = document.querySelector('.navbar-toggler');
+    const navCollapse = document.getElementById('mainNavContent');
+    const bsCollapse = new bootstrap.Collapse(navCollapse, { toggle: false });
+    // const nav = document.getElementById('mainNav');
+   
+    // window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY >= 60));
+
+    //Tran;sformation hamburger <-> X
+    // toggler.addEventListener('click', () => {
+    //   toggler.classList.toggle('collapsed');
+    //   console.log("collapsed appliqué 01");
+    // });
+  
+    // Fermer le menu au clic sur un lien nav-link (en mobile)
+    document.querySelectorAll('#mainNavContent .nav-link').forEach(link => {
+      link.addEventListener('click', () => {
+        if (navCollapse.classList.contains('show')) {
+          bsCollapse.hide();
+          console.log("menus fermées");
+          toggler.classList.remove('collapsed');
+        }
+      });
+    });
+  
+    // Alterne fond transparent/opaque au scroll
+    const nav = document.getElementById('mainNav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 60);
+    });
+
+    
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialisation des animations AOS
+ 
+    initCounterAnimation();
+    console.log('Portfolio moderne chargé avec succès ✨');
+});
+    // Animation des compteurs
+function initCounterAnimation() {
+    const counters = document.querySelectorAll('.stat-number');
+    
+    const animateCounter = (counter) => {
+        const target = parseInt(counter.textContent.replace(/\D/g, ''));
+        const suffix = counter.textContent.replace(/\d/g, '');
+        let count = 0;
+        const increment = target / 60; // Animation sur ~1 seconde
+        
+        const timer = setInterval(() => {
+            count += increment;
+            if (count >= target) {
+                counter.textContent = target + suffix;
+                clearInterval(timer);
+            } else {
+                counter.textContent = Math.floor(count) + suffix;
+            }
+        }, 16);
+    };
+    
+    // Observer pour déclencher l'animation au scroll
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                animateCounter(entry.target);
+                observer.unobserve(entry.target);
+            }
+        });
+    });
+    
+    counters.forEach(counter => observer.observe(counter));
+}
+
+  </script>
+</body>
+</html>

@@ -1,0 +1,198 @@
+:root {
+    --primary: rgb(243, 245, 245);
+
+}
+body { background: #f8f9fa; scroll-behavior: smooth; }
+.section { padding: 5rem 0; }
+.bg-soft { background: #fff; border-radius: .5rem; box-shadow: 0 .125rem .25rem rgba(0,0,0,0.075); }
+
+/* Accueil */
+#home {
+  background: url('./img/header.jpg') center/cover no-repeat;
+  height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  position: relative;
+  animation: fadeIn 1s ease-in-out;
+}
+#home::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+}
+#home .container { position: relative; z-index: 1; text-align: center; }
+
+/* Sections colorées */
+#about      { background: var(--primary); }
+#experience { background: var(--primary); }
+#education  { background: var(--primary); }
+#projects   { background: var(--primary); }
+#contact    { background: var(--primary); }
+
+.section-sh{
+    box-shadow: 5px 5px 5px rgba(16, 19, 19, 0.25);
+}
+.section-sh-1{
+    box-shadow: 0 4px 15px rgba(16, 19, 19, 0.15);
+}
+
+/* Cartes et timeline */
+.card-alt { border: none; border-radius: .75rem; transition: transform .3s; }
+.card-alt:hover { transform: translateY(-5px); }
+.timeline { 
+    position: relative; 
+    margin: 2rem 0; }
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 50%; 
+  top: 0; 
+  bottom: 0;
+  width: 4px; 
+  background: #ccc;
+}
+.timeline-item {
+  position: relative;
+  width: 50%; 
+  padding: 1rem 2rem;
+  animation: slideIn 0.6s ease forwards; 
+  opacity: 0;
+}
+.timeline-item:nth-child(odd)  { left: 0; }
+.timeline-item:nth-child(even) { left: 50%; }
+.timeline-item::before {
+  content: '';
+  position: absolute; 
+  top: 1rem;
+  width: 16px; 
+  height: 16px;
+  border-radius: 50%;
+  background: #6c757d;
+}
+.timeline-item:nth-child(odd)::before  { right: -8px; }
+.timeline-item:nth-child(even)::before { left: -8px; }
+
+/* Navbar */
+#mainNav {
+  background: rgba(255,255,255,0.9);
+  backdrop-filter: blur(10px);
+  transition: background .3s;
+}
+#mainNav.scrolled { background: rgba(255,255,255,1); }
+.navbar-brand { 
+    font-size: 1.5rem; 
+    color: #495057; }
+.nav-link {
+  color: #495057; 
+  margin: 0 .5rem; 
+  padding: .5rem .8rem;
+  border-radius: .25rem; 
+  transition: background .3s, color .3s;
+}
+.nav-link:hover, .nav-link.active {
+    background-color: rgba(68, 74, 80, 0.8) !important; /* gris moyen */
+    color: #fff !important;
+}
+
+/* Hamburger to X */
+.navbar-toggler {
+  border: none; 
+  width: 2rem; 
+  height: 2rem; 
+  position: relative;
+}
+.navbar-toggler .bar {
+  display: block;
+  width: 100%;
+  height: .25rem;
+  background: #495057;
+  border-radius: .125rem;
+  position: absolute;
+  left: 0;
+  transition: transform .3s ease, top .3s ease, opacity .3s ease;
+}
+.navbar-toggler .bar:nth-child(1) { top: 0; }
+.navbar-toggler .bar:nth-child(2) { top: calc(50% - .125rem); }
+.navbar-toggler .bar:nth-child(3) { top: calc(100% - .25rem); }
+.navbar-toggler.collapsed .bar:nth-child(1) {
+  transform: rotate(45deg);
+  top: calc(50% - .125rem);
+}
+.navbar-toggler.collapsed .bar:nth-child(2) { opacity: 0; }
+.navbar-toggler.collapsed .bar:nth-child(3) {
+  transform: rotate(-45deg); 
+  top: calc(50% - .125rem);
+}
+
+.social-icons {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+}
+
+.social-icons a {
+color: #fff;
+font-size: 1.5rem;
+transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.social-icons a:hover {
+color: #ffffff; 
+transform: translateY(-5px);
+}
+.card-alt {
+border-radius: 0.75rem;
+transition: box-shadow 0.3s ease;
+}
+.card-alt:hover {
+box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.overlay {
+position: absolute;
+inset: 0;
+background-color: rgba(0,0,0,0.6);
+opacity: 0;
+transition: opacity 0.3s ease;
+z-index: 10;
+}
+
+.card-alt:hover .overlay {
+opacity: 1;
+}
+
+.overlay .btn {
+opacity: 0.9;
+width: 140px;
+}
+
+.card-img-top {
+transition: transform 0.3s ease;
+}
+
+.card-alt:hover .card-img-top {
+transform: scale(1.05);
+}
+
+
+
+/* Keyframes */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    
+    to { opacity: 1; } 
+}
+@keyframes slideIn { 
+    0% {
+        transform: translateY(20px); 
+        opacity: 0; 
+    } 
+    100% { 
+        transform: translateY(0); 
+        opacity: 1; 
+    } 
+}
